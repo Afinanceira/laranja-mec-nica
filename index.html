@@ -2,69 +2,88 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laranja Mecânica | Cardápio Digital</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Laranja Mecânica | Cardápio Bio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
             --orange: #ff6600;
-            --dark-bg: #0f0f0f;
-            --card-bg: #1a1a1a;
-            --text-gray: #b3b3b3;
+            --dark: #0a0a0a;
+            --grey: #1c1c1c;
+            --text: #ffffff;
+            --accent: #25d366;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', -apple-system, sans-serif; }
-        body { background: var(--dark-bg); color: white; padding-bottom: 100px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: var(--dark); color: var(--text); line-height: 1.6; overflow-x: hidden; }
 
-        /* HEADER */
+        /* HEADER ESTILIZADO */
         header { 
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=500');
-            background-size: cover; background-position: center;
-            text-align: center; padding: 50px 20px; border-bottom: 4px solid var(--orange);
+            text-align: center; 
+            padding: 40px 20px; 
+            background: linear-gradient(180deg, rgba(255,102,0,0.1) 0%, rgba(10,10,10,1) 100%);
+            border-bottom: 2px solid var(--orange);
         }
-        .logo { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--orange); margin-bottom: 15px; }
-        header h1 { font-size: 1.5rem; letter-spacing: 2px; text-transform: uppercase; color: var(--orange); }
-        header p { font-size: 0.8rem; color: white; opacity: 0.8; margin-top: 5px; }
+        .logo { width: 85px; height: 85px; border-radius: 50%; border: 2px solid var(--orange); padding: 3px; margin-bottom: 15px; }
+        h1 { font-size: 1.4rem; text-transform: uppercase; letter-spacing: 2px; color: var(--orange); }
+        .sub { font-size: 0.8rem; letter-spacing: 1px; opacity: 0.8; }
 
-        /* CATEGORIAS */
-        .categories { 
-            display: flex; overflow-x: auto; padding: 20px; gap: 10px; 
-            sticky: top; background: var(--dark-bg); z-index: 10;
+        /* NAVEGAÇÃO POR CATEGORIAS */
+        .nav-container { position: sticky; top: 0; background: var(--dark); padding: 15px 10px; z-index: 100; border-bottom: 1px solid #333; }
+        .nav-tabs { display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; }
+        .nav-tabs::-webkit-scrollbar { display: none; }
+        .tab { 
+            background: var(--grey); border: 1px solid #333; color: white; 
+            padding: 8px 18px; border-radius: 20px; font-size: 0.85rem; 
+            white-space: nowrap; cursor: pointer; transition: 0.3s;
         }
-        .cat-btn { 
-            background: transparent; border: 1px solid var(--orange); color: var(--orange);
-            padding: 8px 20px; border-radius: 25px; white-space: nowrap; font-size: 0.85rem;
-            font-weight: bold; cursor: pointer; transition: 0.3s;
-        }
-        .cat-btn.active { background: var(--orange); color: white; }
+        .tab.active { background: var(--orange); border-color: var(--orange); font-weight: bold; }
 
         /* LISTA DE PRODUTOS */
-        .menu-section { padding: 0 20px; }
+        .container { padding: 20px; max-width: 600px; margin: auto; }
         .product-card { 
-            background: var(--card-bg); border-radius: 15px; padding: 15px; 
-            margin-bottom: 15px; display: flex; align-items: center; gap: 15px;
-            border-left: 0 solid var(--orange); transition: 0.2s;
+            background: var(--grey); border-radius: 12px; padding: 16px; 
+            margin-bottom: 15px; display: flex; justify-content: space-between; 
+            align-items: center; border: 1px solid #222;
         }
-        .product-card:active { border-left-width: 5px; transform: scale(0.98); }
+        .info { flex: 1; padding-right: 10px; }
+        .info h3 { font-size: 1rem; color: var(--orange); margin-bottom: 5px; }
+        .info p { font-size: 0.75rem; color: #aaa; margin-bottom: 8px; line-height: 1.2; }
+        .price { font-weight: bold; color: white; font-size: 1rem; }
+
+        /* BOTÕES DE QUANTIDADE */
+        .qty-box { display: flex; align-items: center; gap: 10px; background: #000; border-radius: 8px; padding: 4px; }
+        .btn-qty { 
+            background: var(--orange); border: none; color: white; 
+            width: 30px; height: 30px; border-radius: 6px; font-weight: bold; font-size: 1.2rem;
+        }
+
+        /* FORMULÁRIO DE FINALIZAÇÃO */
+        .checkout-form { 
+            background: #111; border-radius: 15px; padding: 20px; 
+            margin-top: 30px; border: 1px dashed var(--orange); display: none;
+        }
+        .checkout-form.visible { display: block; }
+        .checkout-form h2 { font-size: 1.1rem; color: var(--orange); margin-bottom: 15px; text-transform: uppercase; }
         
-        .product-img { width: 70px; height: 70px; border-radius: 10px; object-fit: cover; background: #333; }
-        .product-info { flex: 1; }
-        .product-info h3 { font-size: 1rem; margin-bottom: 4px; color: #fff; }
-        .product-info p { font-size: 0.75rem; color: var(--text-gray); line-height: 1.3; }
-        .product-price { color: var(--orange); font-weight: bold; margin-top: 8px; display: block; }
-
-        /* CONTROLE DE QUANTIDADE */
-        .qty-controls { display: flex; align-items: center; gap: 12px; background: #000; padding: 5px; border-radius: 8px; }
-        .qty-btn { background: var(--orange); border: none; color: white; width: 25px; height: 25px; border-radius: 5px; cursor: pointer; }
-
-        /* FOOTER / CARRINHO */
-        .cart-footer { 
-            position: fixed; bottom: 0; left: 0; right: 0; background: #222; 
-            padding: 20px; border-top: 2px solid var(--orange); display: none;
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; font-size: 0.75rem; color: #888; margin-bottom: 5px; text-transform: uppercase; }
+        .input-group input { 
+            width: 100%; background: #222; border: 1px solid #444; color: white; 
+            padding: 12px; border-radius: 8px; font-size: 1rem; outline: none;
         }
-        .btn-order { 
-            background: #25d366; color: white; width: 100%; padding: 15px; 
-            border: none; border-radius: 12px; font-weight: bold; font-size: 1rem;
+        .input-group input:focus { border-color: var(--orange); }
+
+        /* BOTÃO FIXO WHATSAPP */
+        .footer-action { 
+            position: fixed; bottom: 0; left: 0; right: 0; 
+            padding: 15px; background: rgba(10,10,10,0.9); 
+            backdrop-filter: blur(10px); display: none;
+        }
+        .btn-whatsapp { 
+            background: var(--accent); color: white; width: 100%; 
+            padding: 16px; border: none; border-radius: 12px; 
+            font-weight: bold; font-size: 1rem; cursor: pointer;
             display: flex; justify-content: space-between; align-items: center;
         }
     </style>
@@ -72,94 +91,132 @@
 <body>
 
 <header>
-    <img src="https://via.placeholder.com/150" class="logo" alt="Logo Laranja Mecânica">
+    <img src="https://via.placeholder.com/150" class="logo" alt="Laranja Mecânica Logo">
     <h1>Laranja Mecânica</h1>
-    <p>Cocktails • Burgers • Culture</p>
+    <p class="sub">DRINKS • BURGERS • CULTURE</p>
 </header>
 
-<div class="categories">
-    <button class="cat-btn active">Drinks da Casa</button>
-    <button class="cat-btn">Cervejas</button>
-    <button class="cat-btn">Petiscos</button>
-    <button class="cat-btn">Burgers</button>
+<div class="nav-container">
+    <div class="nav-tabs">
+        <div class="tab active" onclick="filterCategory('drinks')">Cocktails</div>
+        <div class="tab" onclick="filterCategory('burgers')">Burgers</div>
+        <div class="tab" onclick="filterCategory('porcoes')">Para Compartilhar</div>
+        <div class="tab" onclick="filterCategory('cervejas')">Cervejas</div>
+    </div>
 </div>
 
-<div class="menu-section" id="menu-items">
+<div class="container" id="menu-items">
     </div>
 
-<div class="cart-footer" id="cart-footer">
-    <button class="btn-order" onclick="finishOrder()">
-        <span><i class="fab fa-whatsapp"></i> Enviar Pedido</span>
-        <span id="total-label">R$ 0,00</span>
+<div class="container">
+    <div class="checkout-form" id="checkout-form">
+        <h2><i class="fas fa-truck"></i> Dados de Entrega</h2>
+        <div class="input-group">
+            <label>Qual seu nome?</label>
+            <input type="text" id="user_name" placeholder="Ex: Paloma Araújo">
+        </div>
+        <div class="input-group">
+            <label>Endereço Completo</label>
+            <input type="text" id="user_address" placeholder="Rua, nº, Bairro (Campina Grande)">
+        </div>
+    </div>
+</div>
+
+<div class="footer-action" id="footer-action">
+    <button class="btn-whatsapp" onclick="sendToWhatsApp()">
+        <span><i class="fab fa-whatsapp"></i> CONCLUIR PEDIDO</span>
+        <span id="total-price">R$ 0,00</span>
     </button>
 </div>
 
 <script>
-    const products = [
-        { id: 1, category: "Drinks", name: "Alex DeLarge", price: 34.00, desc: "Gin, licor de laranja, tônica e fatias de laranja fresca." },
-        { id: 2, category: "Drinks", name: "Negroni Industrial", price: 32.00, desc: "Campari, Vermute tinto e Gin em infusão de carvalho." },
-        { id: 3, category: "Burgers", name: "Moloko Burger", price: 38.00, desc: "Blend 180g, queijo cheddar, bacon caramelizado e maionese da casa." },
-        { id: 4, category: "Petiscos", name: "Coxinha de Pato", price: 28.00, desc: "4 unidades acompanhadas de geleia de pimenta." }
+    const menu = [
+        { id: 1, cat: 'drinks', name: 'Alex DeLarge', price: 34.00, desc: 'Gin, licor de laranja, tônica e rodelas de laranja cítrica.' },
+        { id: 2, cat: 'drinks', name: 'Negroni Industrial', price: 32.00, desc: 'Clássico com Gin, Campari e Vermute em infusão especial.' },
+        { id: 3, cat: 'burgers', name: 'Moloko Burger', price: 38.00, desc: 'Blend 180g, cheddar derretido e bacon crocante.' },
+        { id: 4, cat: 'porcoes', name: 'Batata Mecânica', price: 28.00, desc: 'Batatas rústicas com páprica e alho confitado.' }
     ];
 
     let cart = {};
 
-    function renderMenu() {
+    function renderMenu(filter = 'drinks') {
         const container = document.getElementById('menu-items');
-        container.innerHTML = products.map(p => `
-            <div class="product-card">
-                <div class="product-info">
-                    <h3>${p.name}</h3>
-                    <p>${p.desc}</p>
-                    <span class="product-price">R$ ${p.price.toFixed(2)}</span>
+        container.innerHTML = '';
+        
+        menu.filter(item => item.cat === filter).forEach(item => {
+            container.innerHTML += `
+                <div class="product-card">
+                    <div class="info">
+                        <h3>${item.name}</h3>
+                        <p>${item.desc}</p>
+                        <span class="price">R$ ${item.price.toFixed(2)}</span>
+                    </div>
+                    <div class="qty-box">
+                        <button class="btn-qty" onclick="updateQty(${item.id}, -1)">-</button>
+                        <span id="qty-${item.id}" style="min-width: 20px; text-align: center; font-weight:bold">${cart[item.id] || 0}</span>
+                        <button class="btn-qty" onclick="updateQty(${item.id}, 1)">+</button>
+                    </div>
                 </div>
-                <div class="qty-controls">
-                    <button class="qty-btn" onclick="updateCart(${p.id}, -1)">-</button>
-                    <span id="qty-${p.id}" style="font-weight: bold; min-width: 20px; text-align: center;">0</span>
-                    <button class="qty-btn" onclick="updateCart(${p.id}, 1)">+</button>
-                </div>
-            </div>
-        `).join('');
+            `;
+        });
     }
 
-    function updateCart(id, change) {
-        if (!cart[id]) cart[id] = 0;
+    function updateQty(id, change) {
+        if(!cart[id]) cart[id] = 0;
         cart[id] = Math.max(0, cart[id] + change);
-        
         document.getElementById(`qty-${id}`).innerText = cart[id];
-        calculateTotal();
+        updateUI();
     }
 
-    function calculateTotal() {
+    function updateUI() {
         let total = 0;
-        let hasItems = false;
+        let itemsCount = 0;
         
-        products.forEach(p => {
-            if (cart[p.id] > 0) {
+        menu.forEach(p => {
+            if(cart[p.id] > 0) {
                 total += p.price * cart[p.id];
-                hasItems = true;
+                itemsCount += cart[p.id];
             }
         });
 
-        document.getElementById('total-label').innerText = `R$ ${total.toFixed(2)}`;
-        document.getElementById('cart-footer').style.display = hasItems ? 'block' : 'none';
+        document.getElementById('total-price').innerText = `R$ ${total.toFixed(2)}`;
+        
+        const hasItems = itemsCount > 0;
+        document.getElementById('footer-action').style.display = hasItems ? 'block' : 'none';
+        document.getElementById('checkout-form').classList.toggle('visible', hasItems);
     }
 
-    function finishOrder() {
-        let message = "*PEDIDO - LARANJA MECÂNICA*\n\n";
-        let total = 0;
+    function filterCategory(cat) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        event.target.classList.add('active');
+        renderMenu(cat);
+    }
 
-        products.forEach(p => {
-            if (cart[p.id] > 0) {
-                message += `🍊 ${cart[p.id]}x ${p.name} - R$ ${(p.price * cart[p.id]).toFixed(2)}\n`;
+    function sendToWhatsApp() {
+        const name = document.getElementById('user_name').value;
+        const address = document.getElementById('user_address').value;
+
+        if(!name || !address) {
+            alert("Senhora, por favor, peça ao cliente para preencher nome e endereço!");
+            return;
+        }
+
+        let msg = `*NOVO PEDIDO - LARANJA MECÂNICA*\n\n`;
+        msg += `👤 *Cliente:* ${name}\n📍 *Endereço:* ${address}\n\n*ITENS:*\n`;
+
+        let total = 0;
+        menu.forEach(p => {
+            if(cart[p.id] > 0) {
+                msg += `🍊 ${cart[p.id]}x ${p.name} (R$ ${(p.price * cart[p.id]).toFixed(2)})\n`;
                 total += p.price * cart[p.id];
             }
         });
 
-        message += `\n*TOTAL: R$ ${total.toFixed(2)}*`;
+        msg += `\n*TOTAL: R$ ${total.toFixed(2)}*`;
         
-        const phone = "55839XXXXXXXX"; // Substituir pelo WhatsApp do Bar
-        window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+        // Aqui a senhora coloca o número do Laranja Mecânica
+        const phone = "55839XXXXXXXX"; 
+        window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
     }
 
     renderMenu();
